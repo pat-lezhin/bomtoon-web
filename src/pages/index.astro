@@ -1,0 +1,71 @@
+---
+import "../styles/global.css";  // 우리가 곧 만들 전역 스타일
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>봄툰 모바일 UI</title>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="device-wrap">
+        <div class="iphone" role="region" aria-label="iPhone mockup">
+          <div class="island" aria-hidden="true"></div>
+          <div class="screen">
+
+            <!-- Status bar -->
+            <div class="statusbar">
+              <div id="sb-time">9:41</div>
+              <div>LTE • 🔋 100%</div>
+            </div>
+
+            <!-- ===== LOCK ===== -->
+            <section class="lock" id="lock">
+              <div class="clock" id="lock-clock">9:41</div>
+              <div class="date" id="lock-date">2025년 04월 01일 (화)</div>
+              <div class="hint">알림 외 영역 탭 또는 위로 스와이프 → 홈 화면</div>
+            </section>
+
+            <!-- ===== HOME ===== --> 
+			<section class="home" id="home" hidden>
+			<div class="grid">
+				<button class="app-tile" data-app="cal">
+				<div class="icon">
+					<img src="/images/icons/calendar.svg" alt="캘린더" />
+				</div>
+				<div class="label">Calendar</div>
+				</button>
+
+				<button class="app-tile" data-app="gallery">
+				<div class="icon">
+					<img src="/images/icons/photos.svg" alt="갤러리" />
+				</div>
+				<div class="label">Gallery</div>
+				</button>
+
+				<button class="app-tile" data-app="note">
+				<div class="icon">
+					<img src="/images/icons/notes.svg" alt="메모" />
+				</div>
+				<div class="label">Notes</div>
+				</button>
+
+				<button class="app-tile" data-app="settings">
+				<div class="icon">
+					<img src="/images/icons/settings.svg" alt="설정" />
+				</div>
+				<div class="label">Settings</div>
+				</button>
+			</div>
+			</section>
+
+          </div><!-- /screen -->
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/lib/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+git add .
+git commit -m "Add background images and icon setup"
+git push origin main
+
+
+
