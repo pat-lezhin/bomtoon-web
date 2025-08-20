@@ -56,11 +56,11 @@ position:absolute; inset:0; padding:64px 18px 24px;
 .icon {
   width:64px;
   height:64px;
-  border-radius:18px;     /* 아이콘을 둥글게 자를 거면 유지 */
+  /*border-radius:18px;     /* 아이콘을 둥글게 자를 거면 유지 */
   display:grid;
   place-items:center;
   /* background:#333;  ← 이 줄 삭제 또는 주석 처리 */
-  overflow:hidden;        /* 둥근 모서리 밖은 잘라내기 */
+  /* overflow:hidden;        /* 둥근 모서리 밖은 잘라내기 */
   /* 필요하면 테두리/그림자도 제거 */
   border: none;
   box-shadow: none;
@@ -79,7 +79,7 @@ position:absolute; inset:0; padding:64px 18px 24px;
   min-height: 100svh;                 /* 모바일 주소창 고려 */
   display: grid;
   place-items: center;
-  padding: clamp(12px, 3vw, 28px);
+  padding: clamp(0px, 3vw, 0px);
   position: relative;
   isolation: isolate;                  /* ::before 레이어가 바깥으로 새지 않게 */
   overflow: hidden;
@@ -123,3 +123,36 @@ position:absolute; inset:0; padding:64px 18px 24px;
 .qa-only { display: none; }
 /* body에 data-qa="true"를 달면 QA 컴포넌트 보이기 */
 body[data-qa="true"] .qa-only { display: block; }
+
+/* 홈 앱 버튼: 브라우저 기본 버튼 스타일 제거 + 정렬 */
+.app-tile{
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;  /* ← 기본 흰 배경 제거 */
+  border: 0;                /* ← 기본 테두리 제거 */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 접근성: 키보드 포커스 시만 테두리 표시 */
+.app-tile:focus-visible{
+  outline: 2px solid rgba(255,255,255,.6);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+/* 터치 반응감(선택) */
+.app-tile:active .icon { transform: scale(0.96); }
+
+/* 인라인 SVG 아이콘 크기 맞춤 (img 대신 svg 컴포넌트 사용 시) */
+.icon :where(svg){
+  width: 100%;
+  height: 100%;
+  display: block;
+}
