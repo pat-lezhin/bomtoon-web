@@ -71,6 +71,9 @@ import IconSettings from "../assets/icons/settings.svg";
       </div>
     </div>
     <!-- base, Pages 모두 호환되는 방식 -->
-    <script type="module" src={new URL("../lib/main.js", import.meta.url).pathname}></script>
+    <script type="module">
+      // Vite/아스트로가 알아서 번들하고, base(서브패스)도 자동 반영됨
+      import "../lib/main.js";
+    </script>
   </body>
 </html>
