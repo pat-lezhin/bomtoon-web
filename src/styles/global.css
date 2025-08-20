@@ -73,3 +73,53 @@ position:absolute; inset:0; padding:64px 18px 24px;
   background: transparent;
   display:block;          /* 인라인 공백 제거 */
 }
+
+/* .stage 컨테이너: 내부 요소와 배경 레이어 분리 */
+.stage{
+  min-height: 100svh;                 /* 모바일 주소창 고려 */
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 28px);
+  position: relative;
+  isolation: isolate;                  /* ::before 레이어가 바깥으로 새지 않게 */
+  overflow: hidden;
+}
+
+/* 👉 진짜 배경은 가상요소에 깔고 블러 처리 */
+.stage::before{
+  content: "";
+  position: absolute;
+  inset: -24px;                        /* 블러 번짐 여유 */
+  background: url("/images/bg/page.jpg") center / cover no-repeat;
+  filter: blur(2px) saturate(1.05);    /* 필요시 강도 조절 */
+  transform: scale(1.02);              /* 가장자리 밴딩 방지용 살짝 키우기 */
+  z-index: -1;                         /* 핸드폰 뒤로 */
+}
+
+/* 아이폰 프레임은 기존대로 위 레이어 */
+.device-wrap{
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 26px 38px rgba(0,0,0,.45));
+}
+
+/* QA 전용 버튼: 폰 바깥, 화면 좌상단 고정 */
+.qa-back{
+  position: fixed;              /* 뷰포트 기준 – 스크롤해도 고정 */
+  top: 16px; left: 16px;
+  z-index: 1000;                /* 배경/폰보다 위 */
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  display: grid; place-items: center;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+.qa-back:active { transform: translateY(1px); }
+
+/* QA 모드 토글용: 기본은 숨김 */
+.qa-only { display: none; }
+/* body에 data-qa="true"를 달면 QA 컴포넌트 보이기 */
+body[data-qa="true"] .qa-only { display: block; }

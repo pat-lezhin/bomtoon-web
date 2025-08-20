@@ -1,6 +1,19 @@
+## live 활성화 하기
+npm run dev
+
+
+## github 에다가 push 하기
 git add .
 git commit -m "Add background images and icon setup"
 git push origin main
 
+
+# 이 저장소에만(로컬)
+git config user.name "pat-lezhin"
+git config user.email "pat@lezhin.com"
+
+# 또는 전역
+git config --global user.name "pat-lezhin"
+git config --global user.email "pat@lezhin.com"
 
 
