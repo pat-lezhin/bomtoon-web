@@ -42,7 +42,7 @@ color: #fff;
 position:absolute; inset:0; padding:64px 18px 24px;
 
 /* 홈화면 배경(잠금 풀림) */
-  background: url("/images/bg/home.jpg") center/cover no-repeat;
+  background: url("/images/bg/lockscreen.jpg") center/cover no-repeat;
   color:#fff;
 }
 
