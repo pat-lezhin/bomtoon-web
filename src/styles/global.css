@@ -30,7 +30,7 @@ position:absolute; inset:0;
 display:flex; flex-direction:column; align-items:center; justify-content:center;
 
 /* 👇 배경 이미지 추가 */
-background: url("/images/bg/lockscreen.jpg") center/cover no-repeat;
+background: url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
 color: #fff;
 }
 .lock .clock { font-size:72px; font-weight:300; }
@@ -42,7 +42,7 @@ color: #fff;
 position:absolute; inset:0; padding:64px 18px 24px;
 
 /* 홈화면 배경(잠금 풀림) */
-  background: url("/images/bg/lockscreen.jpg") center/cover no-repeat;
+  background: url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
   color:#fff;
 }
 
@@ -90,7 +90,7 @@ position:absolute; inset:0; padding:64px 18px 24px;
   content: "";
   position: absolute;
   inset: -24px;                        /* 블러 번짐 여유 */
-  background: url("/images/bg/page.jpg") center / cover no-repeat;
+  background: url("../assets/bg/page.jpg") center / cover no-repeat;
   filter: blur(2px) saturate(1.05);    /* 필요시 강도 조절 */
   transform: scale(1.02);              /* 가장자리 밴딩 방지용 살짝 키우기 */
   z-index: -1;                         /* 핸드폰 뒤로 */

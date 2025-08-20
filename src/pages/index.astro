@@ -1,5 +1,11 @@
 ---
 import "../styles/global.css";
+
+// 아이콘 불러오기 (Astro가 자동으로 경로 해시 + 최적화해줌)
+import IconCalendar from "../assets/icons/calendar.svg";
+import IconPhotos from "../assets/icons/photos.svg";
+import IconNotes from "../assets/icons/notes.svg";
+import IconSettings from "../assets/icons/settings.svg";
 ---
 <html lang="ko">
   <head>
@@ -35,24 +41,27 @@ import "../styles/global.css";
             <section class="home" id="home" hidden>
               <div class="grid">
                 <button class="app-tile" data-app="cal">
-                  <div class="icon"><img src="/images/icons/calendar.svg" alt="캘린더" /></div>
+                  <div class="icon"><img src={IconCalendar} alt="캘린더" /></div>
                   <div class="label">Calendar</div>
                 </button>
+
                 <button class="app-tile" data-app="gallery">
-                  <div class="icon"><img src="/images/icons/photos.svg" alt="갤러리" /></div>
+                  <div class="icon"><img src={IconPhotos} alt="갤러리" /></div>
                   <div class="label">Gallery</div>
                 </button>
+
                 <button class="app-tile" data-app="note">
-                  <div class="icon"><img src="/images/icons/notes.svg" alt="메모" /></div>
+                  <div class="icon"><img src={IconNotes} alt="메모" /></div>
                   <div class="label">Notes</div>
                 </button>
+
                 <button class="app-tile" data-app="settings">
-                  <div class="icon"><img src="/images/icons/settings.svg" alt="설정" /></div>
+                  <div class="icon"><img src={IconSettings} alt="설정" /></div>
                   <div class="label">Settings</div>
                 </button>
               </div>
             </section>
-            
+
           </div><!-- /screen -->
         </div>
       </div>
