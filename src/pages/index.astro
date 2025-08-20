@@ -70,10 +70,9 @@ import IconSettings from "../assets/icons/settings.svg";
         </div>
       </div>
     </div>
-    <!-- base, Pages 모두 호환되는 방식 -->
-    <script type="module">
-      // Vite/아스트로가 알아서 번들하고, base(서브패스)도 자동 반영됨
-      import "../lib/main.js";
-    </script>
-  </body>
+  <script 
+    type="module" 
+    src={`${import.meta.env.BASE_URL}src/lib/main.js`}>
+  </script>
+</body>
 </html>
