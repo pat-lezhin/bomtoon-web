@@ -1,158 +1,145 @@
+/* ─────────────────────────────────────────
+   글로벌 변수
+───────────────────────────────────────── */
 :root{
+  --app-h: 100svh;         /* 모바일 주소창 보정용 */
   --brand:#0a84ff;
   --badge:#ff3b30;
 }
 
-html,body{
+html, body{
   height:100%; margin:0;
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial;
   background:#0b0f17; color:#e5e7eb;
 }
 
-/* Stage & Device */
-.stage {
-  min-height: 100vh;
+/* ─────────────────────────────────────────
+   Stage (배경/중앙정렬/세이프에어리어)
+───────────────────────────────────────── */
+.stage{
+  min-height: var(--app-h);
   display: grid;
   place-items: center;
-  background: #0b0f17;
+  padding: clamp(12px, 3vw, 28px);
+  padding-left:  max(clamp(12px, 3vw, 28px), env(safe-area-inset-left));
+  padding-right: max(clamp(12px, 3vw, 28px), env(safe-area-inset-right));
+  padding-top:   max(clamp(12px, 3vw, 28px), env(safe-area-inset-top));
+  padding-bottom:max(clamp(12px, 3vw, 28px), env(safe-area-inset-bottom));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:#0b0f17;
 }
-.device-wrap{ filter: drop-shadow(0 26px 38px rgba(0,0,0,.45)); }
-.iphone{ position:relative; width:390px; height:844px; border-radius:56px; padding:18px; background:#151821; border:10px solid #0e1117; }
+
+.stage::before{
+  content:"";
+  position:absolute; inset:-24px;
+  background:url("../assets/bg/page.jpg") center/cover no-repeat;
+  filter: blur(2px) saturate(1.05);
+  transform: scale(1.02);
+  z-index:-1;
+}
+
+/* ─────────────────────────────────────────
+   Device wrapper (스케일로 뷰포트에 맞춤)
+───────────────────────────────────────── */
+.device-wrap{
+  width:390px;   /* 기준 크기 */
+  height:844px;
+  transform: scale(var(--phone-scale, 1));
+  transform-origin: center center;
+  filter: drop-shadow(0 26px 38px rgba(0,0,0,.45));
+}
+
+/* ─────────────────────────────────────────
+   iPhone frame
+───────────────────────────────────────── */
+.iphone{
+  position:relative;
+  width:100%; height:100%;
+  border-radius:56px; padding:18px;
+  background:#151821; border:10px solid #0e1117;
+}
+
 .island{ position:absolute; top:12px; left:50%; transform:translateX(-50%); width:120px; height:36px; background:#000; border-radius:20px; }
-.screen{ position:relative; height:100%; border-radius:38px; overflow:hidden; background:#1e1e2f; }
+
+.screen{
+  position:absolute; inset:0;
+  border-radius:38px; overflow:hidden;
+  background:#1e1e2f;
+}
 
 /* Status bar */
-.statusbar{ position:absolute; top:8px; left:0; right:0; display:flex; justify-content:space-between; padding:8px 16px; font-size:12px; }
-
-/* Lock */
-.lock {
-position:absolute; inset:0;
-display:flex; flex-direction:column; align-items:center; justify-content:center;
-
-/* 👇 배경 이미지 추가 */
-background: url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
-color: #fff;
+.statusbar{
+  position:absolute; top:8px; left:0; right:0;
+  display:flex; justify-content:space-between;
+  padding:8px 16px; font-size:12px;
 }
-.lock .clock { font-size:72px; font-weight:300; }
-.lock .date { margin-top:8px; font-size:14px; opacity:.9; }
-.lock .hint { position:absolute; bottom:24px; font-size:12px; opacity:.7; }
 
-/* Home(잠금) */
-.home {
-position:absolute; inset:0; padding:64px 18px 24px;
-
-/* 홈화면 배경(잠금 풀림) */
-  background: url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
+/* ─────────────────────────────────────────
+   Lock
+───────────────────────────────────────── */
+.lock{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
   color:#fff;
 }
+.lock .clock{ font-size:72px; font-weight:300; }
+.lock .date{ margin-top:8px; font-size:14px; opacity:.9; }
+.lock .hint{ position:absolute; bottom:24px; font-size:12px; opacity:.7; }
 
-.home .grid {
+/* ─────────────────────────────────────────
+   Home
+───────────────────────────────────────── */
+.home{
+  position:absolute; inset:0;
+  padding:64px 18px 24px;
+  background:url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
+  color:#fff;
+}
+.home .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
   margin-top:24px;
 }
 
-.icon {
-  width:64px;
-  height:64px;
-  /*border-radius:18px;     /* 아이콘을 둥글게 자를 거면 유지 */
-  display:grid;
-  place-items:center;
-  /* background:#333;  ← 이 줄 삭제 또는 주석 처리 */
-  /* overflow:hidden;        /* 둥근 모서리 밖은 잘라내기 */
-  /* 필요하면 테두리/그림자도 제거 */
-  border: none;
-  box-shadow: none;
-}
-
-.icon img {
-  width:100%;
-  height:100%;
-  object-fit:cover;       /* 아이콘 전체 채우기(잘릴 수 있음). 안 잘리려면 contain */
-  background: transparent;
-  display:block;          /* 인라인 공백 제거 */
-}
-
-/* .stage 컨테이너: 내부 요소와 배경 레이어 분리 */
-.stage{
-  min-height: 100svh;                 /* 모바일 주소창 고려 */
-  display: grid;
-  place-items: center;
-  padding: clamp(0px, 3vw, 0px);
-  position: relative;
-  isolation: isolate;                  /* ::before 레이어가 바깥으로 새지 않게 */
-  overflow: hidden;
-}
-
-/* 👉 진짜 배경은 가상요소에 깔고 블러 처리 */
-.stage::before{
-  content: "";
-  position: absolute;
-  inset: -24px;                        /* 블러 번짐 여유 */
-  background: url("../assets/bg/page.jpg") center / cover no-repeat;
-  filter: blur(2px) saturate(1.05);    /* 필요시 강도 조절 */
-  transform: scale(1.02);              /* 가장자리 밴딩 방지용 살짝 키우기 */
-  z-index: -1;                         /* 핸드폰 뒤로 */
-}
-
-/* 아이폰 프레임은 기존대로 위 레이어 */
-.device-wrap{
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 26px 38px rgba(0,0,0,.45));
-}
-
-/* QA 전용 버튼: 폰 바깥, 화면 좌상단 고정 */
-.qa-back{
-  position: fixed;              /* 뷰포트 기준 – 스크롤해도 고정 */
-  top: 16px; left: 16px;
-  z-index: 1000;                /* 배경/폰보다 위 */
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.25);
-  background: rgba(0,0,0,.45);
-  color: #fff;
-  display: grid; place-items: center;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-.qa-back:active { transform: translateY(1px); }
-
-/* QA 모드 토글용: 기본은 숨김 */
-.qa-only { display: none; }
-/* body에 data-qa="true"를 달면 QA 컴포넌트 보이기 */
-body[data-qa="true"] .qa-only { display: block; }
-
-/* 홈 앱 버튼: 브라우저 기본 버튼 스타일 제거 + 정렬 */
+/* 앱 타일(버튼) – 기본 스타일 제거 */
 .app-tile{
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;  /* ← 기본 흰 배경 제거 */
-  border: 0;                /* ← 기본 테두리 제거 */
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  color: #fff;
-  cursor: pointer;
+  -webkit-appearance:none; appearance:none;
+  background:transparent; border:0; padding:0; margin:0;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:#fff; cursor:pointer;
 }
-
-/* 접근성: 키보드 포커스 시만 테두리 표시 */
 .app-tile:focus-visible{
-  outline: 2px solid rgba(255,255,255,.6);
-  outline-offset: 4px;
-  border-radius: 12px;
+  outline:2px solid rgba(255,255,255,.6);
+  outline-offset:4px; border-radius:12px;
 }
+.app-tile:active .icon{ transform:scale(0.96); }
 
-/* 터치 반응감(선택) */
-.app-tile:active .icon { transform: scale(0.96); }
-
-/* 인라인 SVG 아이콘 크기 맞춤 (img 대신 svg 컴포넌트 사용 시) */
-.icon :where(svg){
-  width: 100%;
-  height: 100%;
-  display: block;
+/* 아이콘 박스 */
+.icon{
+  width:64px; height:64px;
+  /* 둥글게 자를 필요 없으면 아래 두 줄 주석 상태 유지 */
+  /* border-radius:18px; */
+  /* overflow:hidden; */
+  border:none; box-shadow:none; display:grid; place-items:center;
 }
+.icon :where(svg){ width:100%; height:100%; display:block; }  /* 인라인 SVG */
+.icon img{ width:100%; height:100%; object-fit:cover; display:block; background:transparent; } /* img 사용시 */
+
+/* ─────────────────────────────────────────
+   QA 버튼
+───────────────────────────────────────── */
+.qa-back{
+  position:fixed; top:16px; left:16px; z-index:1000;
+  width:40px; height:40px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(0,0,0,.45); color:#fff;
+  display:grid; place-items:center;
+  backdrop-filter:blur(6px); cursor:pointer;
+}
+.qa-back:active{ transform:translateY(1px); }
+.qa-only{ display:none; }
+body[data-qa="true"] .qa-only{ display:block; }

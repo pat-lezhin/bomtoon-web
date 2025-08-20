@@ -67,7 +67,7 @@ import IconSettings from "../assets/icons/settings.svg";
         </div>
       </div>
     </div>
-
-    <script type="module" src="../lib/main.js"></script>
+    <!-- base, Pages 모두 호환되는 방식 -->
+    <script type="module" src={new URL("../lib/main.js", import.meta.url).pathname}></script>
   </body>
 </html>
