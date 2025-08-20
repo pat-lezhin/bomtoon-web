@@ -42,31 +42,48 @@ html, body{
 
 /* ─────────────────────────────────────────
    Device wrapper (스케일로 뷰포트에 맞춤)
-───────────────────────────────────────── */
+/* ── 레이아웃 크기는 스케일 반영 */
 .device-wrap{
-  width:390px;   /* 기준 크기 */
-  height:844px;
-  transform: scale(var(--phone-scale, 1));
-  transform-origin: center center;
+  /* 스케일된 실제 너비/높이를 레이아웃에 반영 */
+  width:  calc(390px * var(--phone-scale, 1));
+  height: calc(844px * var(--phone-scale, 1));
+
+  /* 중앙 정렬은 stage 그리드에 맡기되, wrap 자체 크기가 정확해야 함 */
+  .device-wrap { display:grid; place-items:center; }  /* 유지 */
+  place-items: center;
+
   filter: drop-shadow(0 26px 38px rgba(0,0,0,.45));
 }
 
-/* ─────────────────────────────────────────
-   iPhone frame
-───────────────────────────────────────── */
+/* ── 시각적 스케일은 안쪽에만 적용 (기존 그대로) */
 .iphone{
-  position:relative;
-  width:100%; height:100%;
-  border-radius:56px; padding:18px;
-  background:#151821; border:10px solid #0e1117;
+  position: relative;
+
+  /* 기준 크기 = 프레임 바깥까지 포함한 총 크기로 사용하려면 box-sizing 필요 */
+  width: 390px;
+  height: 844px;
+
+  /* ✅ padding/border를 width/height에 포함 */
+  box-sizing: border-box;
+
+  /* 스케일은 내부에만 */
+  transform: scale(var(--phone-scale, 1));
+  transform-origin: top left;
+
+  border-radius: 56px;
+  padding: 18px;
+  background: #151821;
+  border: 10px solid #0e1117;
 }
 
-.island{ position:absolute; top:12px; left:50%; transform:translateX(-50%); width:120px; height:36px; background:#000; border-radius:20px; }
 
+/* 화면 레이어는 꽉 채우기(기존과 동일) */
 .screen{
-  position:absolute; inset:0;
-  border-radius:38px; overflow:hidden;
-  background:#1e1e2f;
+  position: absolute;
+  inset: 0;
+  border-radius: 38px;
+  overflow: hidden;
+  background: #1e1e2f;
 }
 
 /* Status bar */

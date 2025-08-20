@@ -1,6 +1,6 @@
 /* ====== 모바일 뷰포트/스케일 보정 ====== */
 const BASE_W = 390, BASE_H = 844;   // 폰 프레임 기준 사이즈
-const OUTER_PADDING = 24;           // 화면 가장자리 여백
+const OUTER_PADDING =16;           // 화면 가장자리 여백
 
 function setAppHeightVar() {
   const vv = window.visualViewport;
