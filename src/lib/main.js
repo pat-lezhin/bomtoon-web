@@ -129,3 +129,45 @@ if (notifStack) {
     notifStack.appendChild(el);
   });
 }
+
+/* ====== Share Modal Logic ====== */
+const shareBtn = document.getElementById('shareBtn');
+const shareModal = document.getElementById('shareModal');
+const closeShareBtn = document.getElementById('closeShareBtn');
+const shareTwitter = document.getElementById('shareTwitter');
+
+if (shareBtn && shareModal && closeShareBtn && shareTwitter) {
+  
+  const closeShareModal = () => {
+    shareModal.style.display = 'none';
+  };
+
+  shareBtn.addEventListener('click', () => {
+    shareModal.style.display = 'flex';
+  });
+
+  closeShareBtn.addEventListener('click', closeShareModal);
+
+  // 모달 바깥 영역 클릭 시 닫기
+  shareModal.addEventListener('click', (e) => {
+    if (e.target === shareModal) {
+      closeShareModal();
+    }
+  });
+
+  // X(트위터) 공유 링크 클릭 시
+  shareTwitter.addEventListener('click', (e) => {
+    e.preventDefault();
+    const shareText = "김빠지게 못하겠단 소리 하지마라 \n도전 하는게 중요 한거다\n호기롭게 시작한 만큼 끝까지 해보자";
+    const shareUrl = window.location.href;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+    window.open(twitterUrl, '_blank', 'width=600,height=400');
+  });
+
+  // ESC 키로 모달 닫기
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && shareModal.style.display !== 'none') {
+      closeShareModal();
+    }
+  });
+}
