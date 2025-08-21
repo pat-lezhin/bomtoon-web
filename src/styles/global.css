@@ -91,6 +91,7 @@ html, body{
   position:absolute; top:8px; left:0; right:0;
   display:flex; justify-content:space-between;
   padding:8px 16px; font-size:12px;
+  z-index: 10; /* 👈 Z-depth 설정으로 화면 앞/뒤로 보낼수 있음 */
 }
 
 /* ─────────────────────────────────────────
