@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 
+// 👇 [추가] SVG 프레임 이미지를 불러옵니다.
+import iphoneFrame from "../assets/ui/iphone-frame.svg";
+
 // 아이콘 불러오기
 import IconCalendar from "../assets/icons/calendar.svg";
 import IconPhotos from "../assets/icons/photos.svg";
@@ -23,64 +26,51 @@ import IconSettings from "../assets/icons/settings.svg";
       <button class="qa-back qa-only" id="qaBack" aria-label="뒤로 가기">←</button>
 
       <div class="device-wrap">
-        <div class="iphone" role="region" aria-label="iPhone mockup">
-          <div class="island" aria-hidden="true"></div>
-          <div class="screen">
-            <div class="statusbar">
-              <div id="sb-time">9:41</div>
-              <div>LTE • 🔋 100%</div>
+        <img src={iphoneFrame.src} class="iphone-frame" alt="iPhone frame" width={iphoneFrame.width} height={iphoneFrame.height} />
+
+        <!-- <div class="screen">
+          <div class="island" aria-hidden="true"></div> -->
+          <div class="statusbar">
+            <div id="sb-time">9:41</div>
+            <div>LTE • 🔋 100%</div>
+          </div>
+
+          <section class="lock" id="lock">
+            <div class="clock" id="lock-clock">9:41</div>
+            <div class="date" id="lock-date">2025년 04월 01일 (화)</div>
+            <div class="notif-wrap">
+              <div class="notif-stack" id="notifStack" aria-label="알림 목록 (스크롤 가능)"></div>
             </div>
+            <div class="hint">알림 외 영역 탭 또는 위로 스와이프 → 홈 화면</div>
+          </section>
 
-            <section class="lock" id="lock">
-              <div class="clock" id="lock-clock">9:41</div>
-              <div class="date" id="lock-date">2025년 04월 01일 (화)</div>
-
-              <div class="notif-wrap">
-                <div class="notif-stack" id="notifStack" aria-label="알림 목록 (스크롤 가능)"></div>
-              </div>
-
-              <div class="hint">#알림 외 영역 탭 하여 잠금 해제</div>
-            </section>
-
-            <section class="home" id="home" hidden>
-              <div class="grid">
-                <button class="app-tile" data-app="cal">
-                  <div class="icon"><IconCalendar aria-hidden="true" /></div>
-                  <div class="label">Calendar</div>
-                </button>
-
-                <button class="app-tile" data-app="gallery">
-                  <div class="icon"><IconPhotos aria-hidden="true" /></div>
-                  <div class="label">Gallery</div>
-                </button>
-
-                <button class="app-tile" data-app="note">
-                  <div class="icon"><IconNotes aria-hidden="true" /></div>
-                  <div class="label">Notes</div>
-                </button>
-
-                <button class="app-tile" data-app="settings">
-                  <div class="icon"><IconSettings aria-hidden="true" /></div>
-                  <div class="label">Settings</div>
-                </button>
-
-              </div>
-            </section>
-
-          </div></div>
-      </div>
+          <section class="home" id="home" hidden>
+            <div class="grid">
+              <button class="app-tile" data-app="cal">
+                <div class="icon"><IconCalendar aria-hidden="true" /></div>
+                <div class="label">Calendar</div>
+              </button>
+              <button class="app-tile" data-app="gallery">
+                <div class="icon"><IconPhotos aria-hidden="true" /></div>
+                <div class="label">Gallery</div>
+              </button>
+              <button class="app-tile" data-app="note">
+                <div class="icon"><IconNotes aria-hidden="true" /></div>
+                <div class="label">Notes</div>
+              </button>
+              <button class="app-tile" data-app="settings">
+                <div class="icon"><IconSettings aria-hidden="true" /></div>
+                <div class="label">Settings</div>
+              </button>
+            </div>
+          </section>
+        </div></div>
     </div>
-  <script src="../lib/main.js"></script>
-  <div class="share-modal-overlay" id="shareModal">
-    <div class="share-box">
-        <p>이 페이지 공유하기</p>
-        <a href="#" id="shareTwitter" class="share-link" title="X(트위터)에 공유">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-            </svg>
-        </a>
-        <button class="close-share" id="closeShareBtn">✕</button>
+
+    <div class="share-modal-overlay" id="shareModal">
+      ...
     </div>
-  </div>
-</body>
+    
+    <script src="../lib/main.js"></script>
+  </body>
 </html>

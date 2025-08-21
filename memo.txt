@@ -6,10 +6,13 @@ npm run build
 npm run preview
 
 
-## github 에다가 push 하기
+## github push
 git add .
 git commit -m "Add background images and icon setup"
 git push origin main
+
+## github pull
+git pull origin
 
 
 # 이 저장소에만(로컬)

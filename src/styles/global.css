@@ -42,58 +42,65 @@ html, body{
 
 /* ─────────────────────────────────────────
    Device wrapper (스케일로 뷰포트에 맞춤)
-/* ── 레이아웃 크기는 스케일 반영 */
+───────────────────────────────────────── */
 .device-wrap{
-  /* 스케일된 실제 너비/높이를 레이아웃에 반영 */
-  width:  calc(390px * var(--phone-scale, 1));
-  height: calc(844px * var(--phone-scale, 1));
-
-  /* 중앙 정렬은 stage 그리드에 맡기되, wrap 자체 크기가 정확해야 함 */
-  .device-wrap { display:grid; place-items:center; }  /* 유지 */
-  place-items: center;
-
+  /* 👇 [수정] 너비와 높이를 고정값으로 변경합니다. */
+  width: 390px;
+  height: 844px;
+  
+  /* 👇 [유지] position과 transform은 그대로 사용합니다. */
+  position: relative; 
+  transform: scale(var(--phone-scale, 1));
+  transform-origin: top left;
   filter: drop-shadow(0 26px 38px rgba(0,0,0,.45));
 }
 
-/* ── 시각적 스케일은 안쪽에만 적용 (기존 그대로) */
-.iphone{
-  position: relative;
-
-  /* 기준 크기 = 프레임 바깥까지 포함한 총 크기로 사용하려면 box-sizing 필요 */
-  width: 390px;
-  height: 844px;
-
-  /* ✅ padding/border를 width/height에 포함 */
-  box-sizing: border-box;
-
-  /* 스케일은 내부에만 */
-  transform: scale(var(--phone-scale, 1));
-  transform-origin: top left;
-
-  border-radius: 56px;
-  padding: 18px;
-  background: #151821;
-  border: 10px solid #0e1117;
+/* 👇 [추가] SVG 프레임 이미지 스타일 */
+.iphone-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 프레임 이미지가 클릭되는 것을 방지 */
+  z-index: 5; /* 스크린보다 위에 위치 */
 }
 
 
-/* 화면 레이어는 꽉 채우기(기존과 동일) */
+/* 👇 [수정] 스크린 위치를 프레임 안쪽에 정확히 맞춥니다. */
 .screen{
   position: absolute;
-  inset: 0;
-  border-radius: 38px;
+  /* 이제 이 값들을 조절하면 화면이 정상적으로 움직일 겁니다. */
+  top: 30px;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  border-radius: 48px; 
   overflow: hidden;
   background: #1e1e2f;
 }
 
+/* 👇 [수정] 다이나믹 아일랜드 위치를 새 프레임에 맞게 조정합니다. */
+.island{ 
+  position:absolute; 
+  top: 24px; /* 기존 top:12px에서 조정 */
+  left: 50%; 
+  transform: translateX(-50%); 
+  width:120px; 
+  height:36px; 
+  background:#000; 
+  border-radius:20px; 
+  z-index: 15; /* 상태바보다도 위에 위치 */
+}
+
 /* Status bar */
 .statusbar{
+  /* (기존 코드 유지) */
   position:absolute; top:8px; left:0; right:0;
   display:flex; justify-content:space-between;
   padding:8px 16px; font-size:12px;
-  z-index: 10; /* 👈 Z-depth 설정으로 화면 앞/뒤로 보낼수 있음 */
+  z-index: 10;
 }
-
 /* ─────────────────────────────────────────
    Lock
 ───────────────────────────────────────── */
@@ -168,35 +175,39 @@ body[data-qa="true"] .qa-only{ display:block; }
 .lock{
   position:absolute; inset:0;
   display:flex; flex-direction:column; align-items:center;
+  /* 👇 [수정] justify-content를 삭제하여 요소들이 위쪽에 정렬되도록 합니다. */
   background:url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
   color:#fff;
 }
-/* 👇 [수정] 시계, 날짜 스타일을 프로토타입과 유사하게 변경합니다. */
+
 .lock .clock{ 
-  margin-top: -460px;
+  /* 👇 [수정] margin-top으로 위치를 조절합니다. 이 값을 조절해 보세요. */
+  margin-top: -470px; 
   font-size: 92px; 
   font-weight: 300; 
   letter-spacing: 1px;
   line-height: .9;
   text-shadow:0 6px 24px rgba(0,0,0,.45); 
 }
+
 .lock .date{ 
   margin-top:8px; 
   font-size:14px; 
   opacity:.95; 
   text-shadow:0 2px 8px rgba(0,0,0,.45);
 }
-/* 👇 [수정] 잠금화면 파라미터 수정 합니다.. */
+
 .lock .hint{ 
   position:absolute; 
-  bottom:750px; 
+  /* 👇 [수정] bottom으로 위치를 조절합니다. 이 값을 조절해 보세요. */
+  bottom: 730px;
   left:0; 
   right:0; 
   text-align:center; 
   font-size:12px; 
-  opacity:.9; }
+  opacity:.7; 
+}
 
-/* 👇 [추가] 알림 스타일을 여기에 추가합니다. */
 .lock .notif-wrap{ 
   position:absolute; 
   left:0; 
@@ -205,12 +216,14 @@ body[data-qa="true"] .qa-only{ display:block; }
   bottom:80px; 
   padding:0 16px; 
 }
+
 .lock .notif-stack{ 
   height:100%; 
   overflow:auto; 
   padding:2px 2px 10px; 
   mask-image: linear-gradient(transparent, #000 8%, #000 92%, transparent); 
 }
+
 .notif{ 
   background:rgba(255,255,255,.9); 
   color:#111; 
@@ -221,6 +234,7 @@ body[data-qa="true"] .qa-only{ display:block; }
   box-shadow:0 6px 18px rgba(0,0,0,.25); 
   margin:10px 6px; 
 }
+
 .notif .t{ font-weight:700; font-size:13px; }
 .notif .d{ font-size:12px; color:#374151; }
 
