@@ -185,7 +185,15 @@ body[data-qa="true"] .qa-only{ display:block; }
   opacity:.95; 
   text-shadow:0 2px 8px rgba(0,0,0,.45);
 }
-.lock .hint{ position:absolute; bottom:18px; left:0; right:0; text-align:center; font-size:12px; opacity:.9; }
+/* 👇 [수정] 잠금화면 파라미터 수정 합니다.. */
+.lock .hint{ 
+  position:absolute; 
+  bottom:750px; 
+  left:0; 
+  right:0; 
+  text-align:center; 
+  font-size:12px; 
+  opacity:.9; }
 
 /* 👇 [추가] 알림 스타일을 여기에 추가합니다. */
 .lock .notif-wrap{ 
@@ -214,3 +222,18 @@ body[data-qa="true"] .qa-only{ display:block; }
 }
 .notif .t{ font-weight:700; font-size:13px; }
 .notif .d{ font-size:12px; color:#374151; }
+
+/* ===== Unlock animation (잠금 화면 애니메이션) ===== */
+@keyframes unlockUp { 
+  from { transform: translateY(0); opacity:1; } 
+  to { transform: translateY(-40px); opacity:0; } 
+}
+@keyframes homeIn { 
+  from { opacity:0; transform: scale(.98); filter: blur(2px); } 
+  to { opacity:1; transform: scale(1); filter: blur(0); } 
+}
+.lock.unlocking{ animation: unlockUp .25s ease both; }
+.home.show{ animation: homeIn .25s ease both; }
+
+/* hidden 속성이 확실히 적용되도록 강제합니다. */
+.home[hidden]{ display:none !important; }

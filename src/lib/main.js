@@ -50,31 +50,73 @@ setInterval(tick, 1000); tick();
 const lockEl = document.getElementById('lock');
 const homeEl = document.getElementById('home');
 const qaBack = document.getElementById('qaBack');
+const notifStack = document.getElementById('notifStack'); // 알림 영역
 
-function show(view){
-  if (!lockEl || !homeEl) return;
-  lockEl.style.display = (view === 'lock') ? '' : 'none';
-  homeEl.hidden = (view !== 'home');
+// 잠금 해제 함수
+function unlock() {
+  if (lockEl.classList.contains('unlocking')) return; // 중복 실행 방지
+
+  // 애니메이션: 잠금화면 위로 사라지고 홈은 페이드-인
+  lockEl.classList.add('unlocking');
+  setTimeout(() => {
+    lockEl.style.display = 'none';
+    homeEl.hidden = false;
+    // requestAnimationFrame을 사용해 부드러운 애니메이션 시작을 보장
+    requestAnimationFrame(() => homeEl.classList.add('show'));
+  }, 320); // CSS 애니메이션 시간과 맞춤
 }
 
-if (lockEl) lockEl.addEventListener('click', () => show('home'));
-if (qaBack) qaBack.addEventListener('click', () => {
-  if (homeEl && !homeEl.hidden) show('lock');
-});
+// 1. 알림 영역 이외 클릭 시 해제
+if (lockEl) {
+  lockEl.addEventListener('click', (e) => {
+    // 클릭된 곳이 알림 스택 내부이면 아무것도 하지 않음
+    if (e.target.closest('#notifStack')) return; 
+    unlock();
+  });
+}
 
-show('lock');
-/* ====== /뷰 전환 ====== */
+// 2. 위로 스와이프하여 해제
+let startY = null;
+if (lockEl) {
+  lockEl.addEventListener('touchstart', e => startY = e.touches[0].clientY, { passive: true });
+  lockEl.addEventListener('touchmove', e => {
+    if (startY === null) return;
+    const dy = startY - e.touches[0].clientY; // 이동 거리 계산
+    if (dy > 40) { // 40px 이상 위로 움직이면
+      unlock();
+      startY = null; // 중복 실행 방지
+    }
+  }, { passive: true });
+  lockEl.addEventListener('touchend', () => startY = null);
+}
 
-/* ====== 더미 알림 생성 ====== */
-const notifStack = document.getElementById('notifStack');
+
+// QA 뒤로가기 버튼 기능
+if (qaBack) {
+  qaBack.addEventListener('click', () => {
+    // QA 기능은 나중에 필요할 때 복원할 수 있도록 남겨둡니다.
+    // 현재 홈 화면이라면 잠금화면으로 돌아가는 로직 (예시)
+    if (homeEl && !homeEl.hidden) {
+       window.location.reload(); // 간단하게 페이지 새로고침으로 초기화
+    }
+  });
+}
+
+// 초기 화면 설정
+if (lockEl) lockEl.style.display = 'flex';
+if (homeEl) homeEl.hidden = true;
+
+
+/* ====== 더미 알림 생성(더미 텍스트 수정 가능) ====== */
+// 👇 위에서 이미 선언했으므로, 여기서는 const를 삭제했습니다.
 const DUMMY_NOTIFICATIONS = [
-  {t:'김준완 연차', d:'8월18일 이사'},
-  {t:'구내 시당', d:'이번주는 어떨까?'},
-  {t:'톡', d:'[공지] 굿즈 예판 링크 안내'},
-  {t:'News', d:'티저 이미지 티징 (클릭 불가)'},
-  {t:'BOM TV', d:'PV 공개 D-3 · 홈에서 확인'},
-  {t:'Calendar', d:'4/23–26 POP-UP'},
-  {t:'Notes', d:'“home is where the heart is”'},
+  {t:'더미1', d:'텍스트1'},
+  {t:'더미2', d:'텍스트2'},
+  {t:'더미3', d:'텍스트3'},
+  {t:'더미4', d:'텍스트4'},
+  {t:'더미5', d:'텍스트5'},
+  {t:'더미6', d:'텍스트6'},
+  {t:'더미7', d:'텍스트7'},
 ];
 
 if (notifStack) {
