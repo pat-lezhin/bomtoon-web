@@ -64,3 +64,26 @@ if (qaBack) qaBack.addEventListener('click', () => {
 
 show('lock');
 /* ====== /뷰 전환 ====== */
+
+/* ====== 더미 알림 생성 ====== */
+const notifStack = document.getElementById('notifStack');
+const DUMMY_NOTIFICATIONS = [
+  {t:'김준완 연차', d:'8월18일 이사'},
+  {t:'구내 시당', d:'이번주는 어떨까?'},
+  {t:'톡', d:'[공지] 굿즈 예판 링크 안내'},
+  {t:'News', d:'티저 이미지 티징 (클릭 불가)'},
+  {t:'BOM TV', d:'PV 공개 D-3 · 홈에서 확인'},
+  {t:'Calendar', d:'4/23–26 POP-UP'},
+  {t:'Notes', d:'“home is where the heart is”'},
+];
+
+if (notifStack) {
+  DUMMY_NOTIFICATIONS.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'notif';
+    el.innerHTML = `<div class="t">${n.t}</div><div class="d">${n.d}</div>`;
+    // 알림 클릭 시 잠금 해제되지 않도록 이벤트 전파를 막습니다.
+    el.addEventListener('click', e => e.stopPropagation()); 
+    notifStack.appendChild(el);
+  });
+}

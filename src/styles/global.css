@@ -160,3 +160,57 @@ html, body{
 .qa-back:active{ transform:translateY(1px); }
 .qa-only{ display:none; }
 body[data-qa="true"] .qa-only{ display:block; }
+
+/* ─────────────────────────────────────────
+   Lock
+───────────────────────────────────────── */
+.lock{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center;
+  background:url("../assets/bg/lockscreen.jpg") center/cover no-repeat;
+  color:#fff;
+}
+/* 👇 [수정] 시계, 날짜 스타일을 프로토타입과 유사하게 변경합니다. */
+.lock .clock{ 
+  margin-top: -460px;
+  font-size: 92px; 
+  font-weight: 300; 
+  letter-spacing: 1px;
+  line-height: .9;
+  text-shadow:0 6px 24px rgba(0,0,0,.45); 
+}
+.lock .date{ 
+  margin-top:8px; 
+  font-size:14px; 
+  opacity:.95; 
+  text-shadow:0 2px 8px rgba(0,0,0,.45);
+}
+.lock .hint{ position:absolute; bottom:18px; left:0; right:0; text-align:center; font-size:12px; opacity:.9; }
+
+/* 👇 [추가] 알림 스타일을 여기에 추가합니다. */
+.lock .notif-wrap{ 
+  position:absolute; 
+  left:0; 
+  right:0; 
+  top:280px; 
+  bottom:80px; 
+  padding:0 16px; 
+}
+.lock .notif-stack{ 
+  height:100%; 
+  overflow:auto; 
+  padding:2px 2px 10px; 
+  mask-image: linear-gradient(transparent, #000 8%, #000 92%, transparent); 
+}
+.notif{ 
+  background:rgba(255,255,255,.9); 
+  color:#111; 
+  border-radius:16px; 
+  padding:12px 14px; 
+  display:grid; 
+  gap:2px; 
+  box-shadow:0 6px 18px rgba(0,0,0,.25); 
+  margin:10px 6px; 
+}
+.notif .t{ font-weight:700; font-size:13px; }
+.notif .d{ font-size:12px; color:#374151; }

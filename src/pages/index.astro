@@ -6,9 +6,6 @@ import IconCalendar from "../assets/icons/calendar.svg";
 import IconPhotos from "../assets/icons/photos.svg";
 import IconNotes from "../assets/icons/notes.svg";
 import IconSettings from "../assets/icons/settings.svg";
-
-// 👇 main.js 파일의 최종 경로를 빌드 시점에 명시적으로 생성합니다.
-const mainScriptPath = new URL('../lib/main.js', import.meta.url).pathname;
 ---
 <html lang="ko">
   <head>
@@ -36,7 +33,12 @@ const mainScriptPath = new URL('../lib/main.js', import.meta.url).pathname;
             <section class="lock" id="lock">
               <div class="clock" id="lock-clock">9:41</div>
               <div class="date" id="lock-date">2025년 04월 01일 (화)</div>
-              <div class="hint">알림 외 영역 탭 또는 위로 스와이프 → 홈 화면</div>
+
+              <div class="notif-wrap">
+                <div class="notif-stack" id="notifStack" aria-label="알림 목록 (스크롤 가능)"></div>
+              </div>
+
+              <div class="hint">알림 외 영역 탭 하여 잠금 해제</div>
             </section>
 
             <section class="home" id="home" hidden>
@@ -60,13 +62,13 @@ const mainScriptPath = new URL('../lib/main.js', import.meta.url).pathname;
                   <div class="icon"><IconSettings aria-hidden="true" /></div>
                   <div class="label">Settings</div>
                 </button>
+
               </div>
             </section>
-          </div>
-          </div>
+
+          </div></div>
       </div>
     </div>
-    
-    <script src="../lib/main.js"></script>
-  </body>
+  <script src="../lib/main.js"></script>
+</body>
 </html>
