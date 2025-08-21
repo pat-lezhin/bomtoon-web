@@ -1,6 +1,10 @@
 ## live 활성화 하기
 npm run dev
 
+## github action 과 동일한 프리뷰 보기
+npm run build
+npm run preview
+
 
 ## github 에다가 push 하기
 git add .

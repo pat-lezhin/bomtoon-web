@@ -1,11 +1,14 @@
 ---
 import "../styles/global.css";
 
-// 아이콘 불러오기 (Astro가 자동으로 경로 해시 + 최적화해줌)
+// 아이콘 불러오기
 import IconCalendar from "../assets/icons/calendar.svg";
 import IconPhotos from "../assets/icons/photos.svg";
 import IconNotes from "../assets/icons/notes.svg";
 import IconSettings from "../assets/icons/settings.svg";
+
+// 👇 main.js 파일의 최종 경로를 빌드 시점에 명시적으로 생성합니다.
+const mainScriptPath = new URL('../lib/main.js', import.meta.url).pathname;
 ---
 <html lang="ko">
   <head>
@@ -17,30 +20,25 @@ import IconSettings from "../assets/icons/settings.svg";
     <title>봄툰 모바일 UI</title>
   </head>
 
-  <!-- ✅ 진짜 body에 data-qa 부여 -->
   <body data-qa="true">
     <div class="stage">
-      <!-- QA 전용 컨트롤: 폰 바깥 -->
       <button class="qa-back qa-only" id="qaBack" aria-label="뒤로 가기">←</button>
 
       <div class="device-wrap">
         <div class="iphone" role="region" aria-label="iPhone mockup">
           <div class="island" aria-hidden="true"></div>
           <div class="screen">
-            <!-- Status bar -->
             <div class="statusbar">
               <div id="sb-time">9:41</div>
               <div>LTE • 🔋 100%</div>
             </div>
 
-            <!-- LOCK -->
             <section class="lock" id="lock">
               <div class="clock" id="lock-clock">9:41</div>
               <div class="date" id="lock-date">2025년 04월 01일 (화)</div>
               <div class="hint">알림 외 영역 탭 또는 위로 스와이프 → 홈 화면</div>
             </section>
 
-            <!-- HOME -->
             <section class="home" id="home" hidden>
               <div class="grid">
                 <button class="app-tile" data-app="cal">
@@ -62,17 +60,13 @@ import IconSettings from "../assets/icons/settings.svg";
                   <div class="icon"><IconSettings aria-hidden="true" /></div>
                   <div class="label">Settings</div>
                 </button>
-
               </div>
             </section>
-
-          </div><!-- /screen -->
-        </div>
+          </div>
+          </div>
       </div>
     </div>
-  <script 
-    type="module" 
-    src={`${import.meta.env.BASE_URL}src/lib/main.js`}>
-  </script>
-</body>
+    
+    <script src="../lib/main.js"></script>
+  </body>
 </html>
